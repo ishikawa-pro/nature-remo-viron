@@ -1,0 +1,53 @@
+{
+  "name": "my_viron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-vironlib": "^1.6.6"
+  },
+  "devDependencies": {
+    "@types/node": "^14.11.2",
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
+    "eslint": "^7.9.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
+    "prettier": "^2.1.2",
+    "ts-node": "^9.0.0",
+    "ts-node-dev": "^1.0.0-pre.63",
+    "typescript": "^4.0.3"
+  },
+  "scripts": {
+    "build": "npm run clear && npm run format && npm run lint && tsc",
+    "clear": "rm -rf dist",
+    "format": "npm run format:prettier",
+    "format:prettier": "prettier --write '{src,__tests__}/**/*.{ts,tsx}'",
+    "lint": "npm run lint:ts",
+    "lint:ts": "eslint \"{src,__tests__}/**/*.{ts,tsx}\"",
+    "lint:ts:fix": "eslint --fix \"{src,__tests__}/**/*.{ts,tsx}\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm run build"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "prettier --write",
+      "eslint",
+      "git add"
+    ],
+    "__tests__/**/*.ts": [
+      "prettier --write",
+      "eslint"
+    ]
+  },
+  "author": "",
+  "license": "ISC"
+}
