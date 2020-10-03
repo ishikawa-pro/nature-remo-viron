@@ -1,0 +1,426 @@
+swagger: "2.0"
+host: localhost:3000
+info:
+  title: my Viron dashboard
+  description: my dashboard
+  version: 0.0.1
+schemes:
+- http
+
+paths:
+  /:
+    get:
+      x-swagger-router-controller: root
+      description: ルート取得
+      operationId: root#show
+      responses:
+        "301":
+          description: Moved Permanently
+      summary: ルート
+      tags:
+      - swagger
+
+  /viron_authtype:
+    get:
+      x-swagger-router-controller: viron_authtype
+      description: 認証方式一覧
+      operationId: auth_type#list
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthTypeCollection'
+      summary: 認証方式一覧
+      tags:
+      - auth_type
+
+  /viron:
+    get:
+      x-swagger-router-controller: viron
+      description: エンドポイント全体情報取得
+      operationId: viron#show
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Viron'
+      security:
+      - jwt:
+        - api:access
+      summary: エンドポイント全体情報取得
+      tags:
+      - viron
+
+  /googlesignin:
+    get:
+      x-swagger-router-controller: viron_auth
+      description: GoogleOAuth2認証
+      operationId: viron_auth#googlesignin
+      parameters:
+      - description: リダイレクトURL
+        in: query
+        name: redirect_url
+        required: false
+        type: string
+      responses:
+        "301":
+          description: Moved Permanently
+          headers:
+            Content-Type:
+              description: content type
+              type: string
+            Location:
+              description: redirect url
+              type: string
+      summary: GoogleOAuth2 認証
+      tags:
+      - auth
+
+  /googleoauth2callback:
+    get:
+      x-swagger-router-controller: viron_auth
+      description: GoogleOAuth2コールバックパス
+      operationId: viron_auth#googleoauth2callback
+      parameters:
+      - description: 認証コード
+        in: query
+        name: code
+        required: false
+        type: string
+      - description: ステータスチェック
+        in: query
+        name: state
+        required: false
+        type: string
+      responses:
+        "301":
+          description: Moved Permanently
+          headers:
+            Authorization:
+              description: Generated JWT
+              type: string
+            Content-Type:
+              description: content type
+              type: string
+            Location:
+              description: redirect url
+              type: string
+        "307":
+          description: Temporary Redirect
+      summary: GoogleOAuth2 リダイレクトパス
+      tags:
+      - auth
+
+  # /signout:
+  #   post:
+  #     x-swagger-router-controller: viron_auth
+  #     description: サインアウト
+  #     operationId: viron_auth#signout
+  #     responses:
+  #       "204":
+  #         description: No Content
+  #     summary: サインアウト
+  #     tags:
+  #     - auth
+
+  /swagger.json:
+    get:
+      x-swagger-router-controller: swagger
+      description: swagger.json取得
+      operationId: swagger#show
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - jwt:
+        - api:access
+      summary: swagger.json取得
+      tags:
+      - swagger
+
+
+definitions:
+  AuthTypeCollection:
+    items:
+      $ref: '#/definitions/AuthType'
+    type: array
+
+  AuthType:
+    example:
+      method: POST
+      provider: email
+      type: email
+      url: '/signin'
+    properties:
+      method:
+        description: リクエストメソッド
+        type: string
+      provider:
+        description: 認証プロバイダ
+        type: string
+      type:
+        description: 認証方式
+        type: string
+      url:
+        description: リクエストURL
+        type: string
+    required:
+    - type
+    - url
+    - method
+    - provider
+    type: object
+  Viron:
+    example:
+      color: white
+      theme: standard
+      name: Viron Example for EMail Auth
+      pages:
+      - components:
+        - api:
+            method: get
+            path: /stats/dau
+          name: DAU
+          options:
+          - key: key
+            value: value
+          pagination: true
+          query:
+          - key: key
+            type: string
+          style: number
+          table_labels:
+          - name
+        group: empty
+        id: quickview
+        name: クイックビュー
+        section: dashboard
+      tags:
+      - viron
+      - example
+      thumbnail: https://image.com/thumb.png
+    properties:
+      color:
+        default: white
+        enum:
+        - white
+        - black
+        - purple
+        - blue
+        - green
+        - yellow
+        - red
+        - gray
+        type: string
+      theme:
+        default: standard
+        enum:
+        - standard
+        - midnight
+        - terminal
+        type: string
+      name:
+        type: string
+      pages:
+        items:
+          $ref: '#/definitions/Page'
+        type: array
+      tags:
+        items:
+          type: string
+        type: array
+      thumbnail:
+        type: string
+    required:
+    - name
+    - color
+    - thumbnail
+    - tags
+    - pages
+    type: object
+
+  Page:
+    example:
+      components:
+      - api:
+          method: get
+          path: /user
+        name: ユーザー
+        options:
+        - key: key
+          value: value
+        pagination: true
+        query:
+        - key: key
+          type: string
+        style: table
+        table_labels:
+        - name
+      group: UserGroup
+      id: user
+      name: ユーザー
+      section: admin
+    properties:
+      components:
+        items:
+          $ref: '#/definitions/Component'
+        type: array
+      group:
+        type: string
+      id:
+        description: ページID
+        type: string
+      name:
+        description: 名称
+        type: string
+      section:
+        description: セクション名
+        default: manage
+        enum:
+        - manage
+        - dashboard
+        type: string
+    required:
+    - id
+    - name
+    - section
+    - group
+    - components
+    type: object
+
+  Component:
+    example:
+      api:
+        method: get
+        path: /user
+      name: ユーザー
+      options:
+      - key: key
+        value: value
+      pagination: true
+      query:
+      - key: key
+        type: string
+      style: table
+      table_labels:
+      - id
+      - name
+    properties:
+      api:
+        properties:
+          method:
+            description: リクエストメソッド
+            type: string
+          path:
+            description: リクエストパス
+            type: string
+        required:
+        - path
+        - method
+        type: object
+      name:
+        description: ページタイトル
+        type: string
+      options:
+        description: オプション
+        items:
+          properties:
+            key:
+              description: オプション キー名
+              type: string
+            value:
+              description: オプション 値
+              type: string
+          required:
+          - key
+          - value
+          type: object
+        type: array
+      pagination:
+        description: ページネーション
+        type: boolean
+      query:
+        description: クエリパラメータ
+        items:
+          properties:
+            key:
+              description: クエリパラメータ キー名
+              type: string
+            type:
+              default: string
+              description: クエリパラメータ 型
+              enum:
+              - string
+              - integer
+              - number
+              - boolean
+              - date
+              - datetime
+              - time
+              type: string
+          required:
+          - key
+          - type
+          type: object
+        type: array
+      style:
+        description: コンポーネントスタイル
+        default: number
+        enum:
+        - number
+        - list
+        - table
+        - chart
+        type: string
+      table_labels:
+        description: テーブル列 表示順
+        items:
+          type: string
+        type: array
+    required:
+    - api
+    - name
+    - style
+    - pagination
+    type: object
+
+  Error:
+    example:
+      code: invalid_value
+      detail: Value of ID must be an integer
+      id: 3F1FKVRR
+      meta:
+        timestamp: 1502172152
+      status: "400"
+    properties:
+      code:
+        description: エラーコード
+        type: string
+      detail:
+        description: 詳細
+        type: string
+      id:
+        description: ID
+        type: string
+      meta:
+        additionalProperties: true
+        description: メタ情報
+        type: object
+      status:
+        description: ステータスコード
+        type: string
+    type: object
+
+securityDefinitions:
+  jwt:
+    type: oauth2
+    authorizationUrl: /signin
+    flow: implicit
+    scopes:
+      api:access: API access
