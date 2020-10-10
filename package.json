@@ -50,7 +50,8 @@
     "lint:ts:fix": "eslint --fix \"{src,__tests__}/**/*.{ts,tsx}\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/src/index.js",
-    "generate:swagger-json": "js-yaml src/swagger/swagger.yaml > src/swagger/swagger.json"
+    "generate:swagger-json": "js-yaml src/swagger/swagger.yaml > src/swagger/swagger.json",
+    "job:get-room-events": "node dist/jobs/get_room_events.js"
   },
   "husky": {
     "hooks": {
