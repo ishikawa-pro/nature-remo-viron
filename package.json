@@ -49,7 +49,7 @@
     "lint:ts": "eslint \"{src,__tests__}/**/*.{ts,tsx}\"",
     "lint:ts:fix": "eslint --fix \"{src,__tests__}/**/*.{ts,tsx}\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_CONFIG_DIR=./dist/config node dist/src/index.js",
+    "start": "node dist/src/index.js",
     "generate:swagger-json": "js-yaml src/swagger/swagger.yaml > src/swagger/swagger.json"
   },
   "husky": {
