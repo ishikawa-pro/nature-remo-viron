@@ -44,6 +44,10 @@ interface Config {
   store: {
     postgres: PostgresConnectionOptions;
   };
+  viron: {
+    host: string;
+    schemes: ['http' | 'https'];
+  };
 }
 
 class Context {

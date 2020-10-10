@@ -1,11 +1,11 @@
 swagger: "2.0"
-host: afternoon-earth-56969.herokuapp.com
+host: localhost:3000
 info:
-  title: my Viron dashboard
-  description: my dashboard
+  title: nature remo dashboard
+  description: nature remo dashboard
   version: 0.0.1
 schemes:
-- https
+- http
 
 paths:
   /:

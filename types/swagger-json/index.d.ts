@@ -7,7 +7,7 @@ declare module "*/swagger/swagger.json" {
       description: string | null,
       version: string
     },
-    schemes: 'https'[],
+    schemes: ['http' | 'https'],
   }
   export interface SwaggerPathComponent {
     'x-swagger-router-controller': string,

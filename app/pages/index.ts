@@ -3,7 +3,7 @@ import { appliances, devices } from './nature_remo';
 import { room } from './surveillance';
 
 export const pages = createMenu(
-  'my-viron',
+  'nature-remo-dashboard',
   [room, appliances, devices],
   undefined,
   ['viron'],

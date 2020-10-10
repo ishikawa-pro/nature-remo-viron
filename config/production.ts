@@ -1,4 +1,8 @@
 export = {
+  viron: {
+    host: 'afternoon-earth-56969.herokuapp.com',
+    schemes: ['https']
+  },
   store: {
     postgres: {
       type: "postgres",
