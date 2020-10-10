@@ -1,5 +1,5 @@
 swagger: "2.0"
-host: https://afternoon-earth-56969.herokuapp.com
+host: afternoon-earth-56969.herokuapp.com
 info:
   title: my Viron dashboard
   description: my dashboard

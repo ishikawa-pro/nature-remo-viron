@@ -1,13 +1,12 @@
 {
   "swagger": "2.0",
-  "host": "localhost:3000",
+  "host": "afternoon-earth-56969.herokuapp.com",
   "info": {
     "title": "my Viron dashboard",
     "description": "my dashboard",
     "version": "0.0.1"
   },
   "schemes": [
-    "http",
     "https"
   ],
   "paths": {
