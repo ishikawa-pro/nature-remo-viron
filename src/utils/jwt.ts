@@ -12,7 +12,7 @@ export const sign = (claims: {
   sub: string;
   googleOAuthToken: Credentials;
 }) => {
-  const authJwt = context.confg('authJwt');
+  const authJwt = context.config('authJwt');
   return jwt.sign(
     {
       exp: Math.floor(

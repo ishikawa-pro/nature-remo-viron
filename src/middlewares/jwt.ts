@@ -21,7 +21,7 @@ const getToken = (): GetTokenCallback => {
 };
 
 export const authJwt: RequestHandler = (req, res, next) => {
-  const options = context.confg('authJwt');
+  const options = context.config('authJwt');
 
   jwt({
     secret: Buffer.from(options.rsa_public_key),

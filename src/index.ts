@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import express, { ErrorRequestHandler } from 'express';
 import createMiddleware, { SwaggerObject } from 'swagger-express-middleware';
 import { Credentials } from 'google-auth-library';
-import swaggerObj from '../swagger/swagger.json';
+import swaggerObj from './swagger/swagger.json';
 import { assignController } from './utils/swagger';
 import * as controllers from './routes';
 import { useMiddlewares } from './middlewares';
@@ -37,7 +37,7 @@ declare global {
 
   const app = express();
 
-  createMiddleware('swagger/swagger.yaml', app, (err, middleware) => {
+  createMiddleware(swaggerObj as SwaggerObject, app, (err, middleware) => {
     if (err instanceof Error) throw err;
     app.use(middleware.metadata());
 

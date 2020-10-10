@@ -53,10 +53,10 @@ class Context {
 
   constructor() {
     this.natureRemo = this.initNatureRemoApi();
-    this.googleApi = this.initGoogleApi(this.confg('googleOauth'));
+    this.googleApi = this.initGoogleApi(this.config('googleOauth'));
   }
 
-  confg<T extends keyof Config>(key: T): Config[T] {
+  config<T extends keyof Config>(key: T): Config[T] {
     return config.get(key);
   }
 
@@ -75,12 +75,12 @@ class Context {
 
   initNatureRemoApi() {
     const client = new DefaultApi();
-    client.accessToken = this.confg('natureRemo').accessToken;
+    client.accessToken = this.config('natureRemo').accessToken;
     return client;
   }
 
   async initTypeOrm() {
-    this.typeOrmConn = await createConnection(this.confg('store').postgres);
+    this.typeOrmConn = await createConnection(this.config('store').postgres);
   }
 
   getDBRrepository<Entity>(target: EntityTarget<Entity>): Repository<Entity> {

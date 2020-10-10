@@ -2,7 +2,7 @@
   "name": "my_viron",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "dependencies": {
     "@types/config": "0.0.36",
     "axios": "^0.20.0",
@@ -41,7 +41,7 @@
   },
   "scripts": {
     "dev": "PORT=3000 ts-node-dev --ignore-watch node_modules --inspect=53000 -- src/index.ts",
-    "build": "npm run clear && npm run format && npm run lint && tsc && npm run generate:swagger-json",
+    "build": "npm run clear && npm run format && npm run lint && tsc && npm run generate:swagger-json && cp -r src/swagger dist/src",
     "clear": "rm -rf dist",
     "format": "npm run format:prettier",
     "format:prettier": "prettier --write '{src,__tests__}/**/*.{ts,tsx}'",
@@ -49,8 +49,8 @@
     "lint:ts": "eslint \"{src,__tests__}/**/*.{ts,tsx}\"",
     "lint:ts:fix": "eslint --fix \"{src,__tests__}/**/*.{ts,tsx}\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/index.js",
-    "generate:swagger-json": "js-yaml swagger/swagger.yaml > swagger/swagger.json"
+    "start": "NODE_CONFIG_DIR=./dist/config node dist/src/index.js",
+    "generate:swagger-json": "js-yaml src/swagger/swagger.yaml > src/swagger/swagger.json"
   },
   "husky": {
     "hooks": {

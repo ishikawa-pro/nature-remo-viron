@@ -1,5 +1,5 @@
 import { Express, RequestHandler } from 'express';
-import { SwaggerPathComponent, Swagger } from '../../swagger/swagger.json';
+import { SwaggerPathComponent, Swagger } from '../swagger/swagger.json';
 import { controllers } from '../routes';
 
 type Components = {

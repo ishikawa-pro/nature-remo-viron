@@ -4,7 +4,7 @@ import { asyncWrapper } from '../utils/async_wrapper';
 import { context } from '../context';
 
 const handler: RequestHandler = async (req, _res, next) => {
-  const auth = context.confg('auth');
+  const auth = context.config('auth');
   const pathObj = req.swagger.api.paths[req.path][req.method.toLowerCase()];
   // security schemaがなければスキップ
   if (pathObj.security == null) {
