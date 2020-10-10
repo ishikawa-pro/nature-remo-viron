@@ -6,13 +6,13 @@ export = {
       synchronize: true,
       logging: false,
       entities: [
-         "dist/src/entities/**/*.ts"
+         "dist/src/entities/**/*.js"
       ],
       migrations: [
-         "dist/src/migration/**/*.ts"
+         "dist/src/migration/**/*.js"
       ],
       subscribers: [
-         "dist/src/subscriber/**/*.ts"
+         "dist/src/subscriber/**/*.js"
       ]
     }
   }
