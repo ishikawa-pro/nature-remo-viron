@@ -1,5 +1,5 @@
-import { google } from 'googleapis';
 import axios from 'axios';
+import { context } from '../context';
 import { GenerateAuthUrlOpts, Credentials } from 'google-auth-library';
 import { GOOGLE_OAUTH_SCOPES, GOOGLE_OAUTH_USER_INFO_URL } from '../constant';
 
@@ -9,16 +9,8 @@ export interface clientOption {
   redirectUrl: string;
 }
 
-export const getClient = (options: clientOption) => {
-  return new google.auth.OAuth2(
-    options.clientId,
-    options.clientSecret,
-    options.redirectUrl
-  );
-};
-
-export const getToken = (code: string, options: clientOption) => {
-  const client = getClient(options);
+export const getToken = (code: string) => {
+  const client = context.googleApi;
   return client.getToken(code);
 };
 
@@ -32,8 +24,8 @@ export const getMailAddress = async (token: Credentials) => {
   return res.data.email;
 };
 
-export const genAuthUrl = (options: clientOption, stateUrl?: string) => {
-  const client = getClient(options);
+export const genAuthUrl = (stateUrl?: string) => {
+  const client = context.googleApi;
   const opts: GenerateAuthUrlOpts = {
     access_type: 'offline',
     scope: GOOGLE_OAUTH_SCOPES,

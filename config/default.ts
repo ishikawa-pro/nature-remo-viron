@@ -17,5 +17,8 @@ export = {
   auth: {
     allowedDomain: process.env.ALLOWED_DOMAIN,
     adminUser: process.env.ADMIN_USER
+  },
+  natureRemo: {
+    accessToken: process.env.NATURE_REMO_ACCESS_TOKEN
   }
 };

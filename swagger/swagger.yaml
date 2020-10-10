@@ -144,6 +144,190 @@ paths:
       tags:
       - swagger
 
+  /nature-remo/devices:
+    get:
+      x-swagger-router-controller: devices
+      description: nature-remoのデバイス取得
+      operationId: devices#show
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/NatureRemoDeviceList'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - jwt:
+        - api:access
+      summary: nature-remoのデバイス取得
+      tags:
+      - device
+
+  /nature-remo/appliances:
+    get:
+      x-swagger-router-controller: appliances
+      description: nature-remoの家電取得
+      operationId: appliances#show
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/NatureRemoApplianceList'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - jwt:
+        - api:access
+      summary: nature-remoの家電取得
+      tags:
+      - appliances
+  /dashboard/room/temperature:
+    get:
+      x-swagger-router-controller: room
+      description: 部屋の温度取得
+      operationId: room#temperature
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/NumberComponentResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - jwt:
+        - api:access
+      summary: 部屋の温度を取得
+      tags:
+      - dashboard
+
+  /dashboard/room/humidity:
+    get:
+      x-swagger-router-controller: room
+      description: 部屋の湿度取得
+      operationId: room#humidity
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/NumberComponentResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - jwt:
+        - api:access
+      summary: 部屋の湿度を取得
+      tags:
+      - dashboard
+
+  /dashboard/room/illumination:
+    get:
+      x-swagger-router-controller: room
+      description: 部屋の照度取得
+      operationId: room#illumination
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/NumberComponentResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - jwt:
+        - api:access
+      summary: 部屋の照度を取得
+      tags:
+      - dashboard
+
+  /dashboard/room/temperature-graph:
+    get:
+      x-swagger-router-controller: room
+      description: 温度グラフ
+      operationId: room#temperature-graph
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/GraphComponent'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - jwt:
+        - api:access
+      summary: 温度グラフ
+      tags:
+      - dashboard
+
+  /dashboard/room/humidity-graph:
+    get:
+      x-swagger-router-controller: room
+      description: 湿度グラフ
+      operationId: room#humidity-graph
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/GraphComponent'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - jwt:
+        - api:access
+      summary: 湿度グラフ
+      tags:
+      - dashboard
+
+  /dashboard/room/illumination-graph:
+    get:
+      x-swagger-router-controller: room
+      description: 照度グラフ
+      operationId: room#illumination-graph
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/GraphComponent'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - jwt:
+        - api:access
+      summary: 照度グラフ
+      tags:
+      - dashboard
+
+
+  /batch/status-update:
+    get:
+      x-swagger-router-controller: batch
+      description: 部屋のステータスを取得
+      operationId: batch#room
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+      summary: 部屋のステータスを取得
+      tags:
+      - batch
+
 
 definitions:
   AuthTypeCollection:
@@ -389,6 +573,90 @@ definitions:
     - style
     - pagination
     type: object
+
+  NumberComponentResponse:
+    type: object
+    properties: 
+      value: 
+        type: string
+
+  NatureRemoDeviceList:
+    type: array
+    items: 
+      $ref: '#/definitions/NatureRemoDevice'
+
+  NatureRemoDevice:
+    type: object
+    properties: 
+      id:
+        type: string
+        description: デバイスID
+      name: 
+        type: string
+        description: デバイス名
+      firmwareVersion:
+        type: string
+        description: ファームウェアバージョン
+      serialNumber:
+        type: string
+        description: シリアルナンバー
+
+  NatureRemoApplianceList:
+    type: array
+    items: 
+      $ref: '#/definitions/NatureRemoAppliance'
+
+  NatureRemoAppliance:
+    type: object
+    properties: 
+      id:
+        type: string
+        description: 家電ID
+      name:
+        type: string
+        description: 家電名
+      nickname:
+        type: string
+        description: ニックネーム
+      type:
+        type: string
+        enum:
+          - 'AC'
+          - 'TV'
+          - 'LIGHT'
+          - 'IR'
+
+  GraphComponent:
+    type: object
+    properties: 
+      x: 
+        type: string
+      y: 
+        type: string
+      size: 
+        type: string
+      guide:
+        type: object
+        properties: 
+          x:
+            type: object
+            properties: 
+              label:
+                string
+          y:
+            type: object
+            properties: 
+              label:
+                string
+      data:
+        type: array
+        items:
+          type: object
+          properties: 
+            dateTime:
+              type: string
+            value:
+              type: string
 
   Error:
     example:

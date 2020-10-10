@@ -1,6 +1,6 @@
+import 'reflect-metadata';
 import express, { ErrorRequestHandler } from 'express';
 import createMiddleware, { SwaggerObject } from 'swagger-express-middleware';
-import {} from 'express-jwt';
 import { Credentials } from 'google-auth-library';
 import swaggerObj from '../swagger/swagger.json';
 import { assignController } from './utils/swagger';
@@ -59,5 +59,5 @@ declare global {
     app.use(errorhandler);
   });
 
-  app.listen(process.env.SERVICE_PORT ?? 3000);
+  app.listen(process.env.PORT ?? 3000);
 })();
