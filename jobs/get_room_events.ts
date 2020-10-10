@@ -1,5 +1,5 @@
-import { context } from '../src/context';
-import { createEvent } from '../src/services/daily_room_data';
+import { context } from '../app/context';
+import { createEvent } from '../app/services/daily_room_data';
 
 (async () => {
   console.log('start batch: get-room-events');

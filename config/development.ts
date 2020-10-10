@@ -10,13 +10,13 @@ export = {
       synchronize: true,
       logging: false,
       entities: [
-         "src/entities/**/*.ts"
+         "app/entities/**/*.ts"
       ],
       migrations: [
-         "src/migration/**/*.ts"
+         "app/migration/**/*.ts"
       ],
       subscribers: [
-         "src/subscriber/**/*.ts"
+         "app/subscriber/**/*.ts"
       ]
     }
   }
