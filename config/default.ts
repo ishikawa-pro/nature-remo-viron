@@ -11,8 +11,8 @@ export = {
       iss: 'viron-example-google',
       aud: 'viron.local',
     },
-    rsa_private_key: process.env.AUTH_JWT_PRIVATE_KEY!,
-    rsa_public_key: process.env.AUTH_JWT_PUBLIC_KEY!,
+    rsa_private_key: process.env.AUTH_JWT_PRIVATE_KEY!.replace(/\\n/g, '\n'),
+    rsa_public_key: process.env.AUTH_JWT_PUBLIC_KEY!.replace(/\\n/g, '\n'),
   },
   auth: {
     allowedDomain: process.env.ALLOWED_DOMAIN,
