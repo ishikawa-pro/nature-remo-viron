@@ -73,8 +73,7 @@
   },
   "include": [
     "app/**/*",
-    "swagger/*",
     "config/*",
-    "jobs"
+    "jobs/*"
   ]
 }

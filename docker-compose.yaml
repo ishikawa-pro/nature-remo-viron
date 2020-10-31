@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: nature-remo-dashboard
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - 5432:5432
+
+  viron:
+    build: .
+    depends_on:
+      - db
+    restart: always
+    environment:
+      NODE_ENV: "development"
+    env_file:
+     - ./.env
+    volumes:
+      - ./app:/nature-remo-dashboard/app
+      - ./config:/nature-remo-dashboard/config
+      - ./types:/nature-remo-dashboard/types
+    command: run dev
+    links:
+      - "db:database"
+    ports:
+      - 3000:3000
